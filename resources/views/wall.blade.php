@@ -30,10 +30,20 @@
     <h1>Six Feet Under</h1>
     <p>The thoughts you'd never say out loud.</p>
 
-    @foreach($thoughts as $thought)
-        <div class = "post"> {{ $thought }} </div>
+    @foreach($posts as $post)
+        <div class = "post"> {{ $post->body }} - ❤ {{$post->kudos}}️ </div>
     @endforeach
 
+    <form method="POST" action="/posts" style="width: min(640px, 100%);">
+        @csrf
+        <textarea name="body" maxlength="280" rows="3"
+                  placeholder="Say the unsayable…"
+                  style="width:100%; background:#14141c; color:#e7e7ea; border:1px solid #23232e; border-radius:12px; padding:1rem; font:inherit; resize:none;"></textarea>
+        <button type="submit"
+                style="margin-top:.5rem; background:#b3143a; color:#fff; border:0; border-radius:10px; padding:.6rem 1.2rem; font:inherit; cursor:pointer;">
+            Send
+        </button>
+    </form>
 
 
 </body>

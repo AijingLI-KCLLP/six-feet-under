@@ -16,7 +16,6 @@ return new class extends Migration
             $table->text('body');
             $table->unsignedTinyInteger('kudos')->default(0);
             $table->timestamps(); // = created_at and updated_at
-            $table->timestamp('hidden_at')->nullable();
             $table->softDeletes(); // = deleted_at
         });
     }

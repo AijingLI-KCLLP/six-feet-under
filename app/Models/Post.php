@@ -2,9 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    protected $fillable = ['posts'];
+    use SoftDeletes;
+
+    protected $fillable = ['body'];
+
+
 }
