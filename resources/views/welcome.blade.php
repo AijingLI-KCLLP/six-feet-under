@@ -36,12 +36,12 @@
         font-weight: 300;
     }
     .glitch::before {
-        color: #ff3c3c22;
+        color: #ff000055;
         animation: glitch 5s infinite 0.05s;
         clip-path: inset(30% 0 50% 0);
     }
     .glitch::after {
-        color: #3c8fff22;
+        color: #8b000044;
         animation: glitch 5s infinite 0.1s;
         clip-path: inset(60% 0 20% 0);
     }
@@ -50,7 +50,7 @@
     .ripple {
         position: absolute;
         border-radius: 50%;
-        background: rgba(255,255,255,0.15);
+        background: rgba(139, 0, 0, 0.3);
         transform: scale(0);
         animation: rippleAnim 0.5s ease-out forwards;
         pointer-events: none;
@@ -94,7 +94,7 @@
 </style>
 
 </head>
-<body class="bg-[#080808] text-[#e8e8e3] min-h-screen">
+<body class="bg-[#0d0808] text-[#e8e8e3] min-h-screen">
 
     {{-- Header --}}
     <header class="border-b border-[#1a1a1a] px-10 py-6 flex items-center justify-between">
@@ -102,7 +102,7 @@
             Six Feet Under
         </span>
         <span class="flex items-center gap-2 text-[#444] uppercase tracking-[0.2em] text-[0.65rem]">
-            <span class="soul-dot w-1.5 h-1.5 rounded-full bg-[#444]"></span>
+            <span class="soul-dot w-1.5 h-1.5 rounded-full bg-[#8b0000]"></span>
             <span id="soul-count" class="text-[#e8e8e3]">0</span> presence(s) in the void
         </span>
     </header>
@@ -116,7 +116,7 @@
             <p class="font-serif-elegant text-5xl font-light leading-tight">
                 Write.<br>
                 Be seen.<br>
-                <em class="text-[#555]">Then vanish.</em>
+                <em class="text-[#8b0000]">Then vanish.</em>
             </p>
 
             <form method="POST" action="/posts" class="mt-auto flex flex-col gap-4">
@@ -126,11 +126,11 @@
                     name="body"
                     maxlength="280"
                     placeholder="Something you have never said out loud..."
-                    class="bg-transparent border border-[#222] text-[#e8e8e3] font-light text-sm leading-relaxed p-4 resize-none h-32 rounded-sm outline-none placeholder-[#333] focus:border-[#444] transition-colors"
+                    class="bg-transparent border border-[#222] text-[#e8e8e3] font-light text-sm leading-relaxed p-4 resize-none h-32 rounded-sm outline-none placeholder-[#333] focus:border-[#8b0000] transition-colors"
                 ></textarea>
                 <button
                     type="submit"
-                    class="border border-[#2a2a2a] text-[#888] uppercase tracking-[0.2em] text-[0.7rem] py-3 rounded-sm hover:border-[#555] hover:text-[#e8e8e3] transition-all"
+                    class="border border-[#8b0000] text-[#8b0000] uppercase tracking-[0.2em] text-[0.7rem] py-3 rounded-sm hover:bg-[#8b0000] hover:text-white transition-all"
                 >
                     Release into the void
                 </button>
@@ -147,7 +147,7 @@
                     <div class="flex items-center justify-between">
                         <button
                             onclick="sendKudo({{ $post->id }}, event)"
-                            class="flex items-center gap-2 border border-[#1e1e1e] text-[#444] text-[0.7rem] tracking-wide px-3 py-1.5 rounded-sm hover:border-[#444] hover:text-[#e8e8e3] transition-all"
+                            class="kudo-btn flex items-center gap-2 border border-[#1e1e1e] text-[#444] text-[0.7rem] tracking-wide px-3 py-1.5 rounded-sm hover:border-[#8b0000] hover:text-[#ff4444] transition-all"
                         >
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -156,7 +156,7 @@
                         </button>
                         <div class="flex gap-1 items-center">
                             @for ($i = 0; $i < 6; $i++)
-                                <div class="w-4 h-0.5 rounded-full {{ $i < $post->kudos ? 'bg-[#555]' : 'bg-[#1e1e1e]' }}"></div>
+                                <div class="w-4 h-0.5 rounded-full {{ $i < $post->kudos ? 'bg-[#8b0000]' : 'bg-[#1e1e1e]' }}"></div>
                             @endfor
                         </div>
                     </div>

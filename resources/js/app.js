@@ -62,7 +62,7 @@ window.Echo.join('presence-the-void')
 function buildPips(kudos) {
     let html = '';
     for (let i = 0; i < 6; i++) {
-        const filled = i < kudos ? 'bg-[#555]' : 'bg-[#1e1e1e]';
+        const filled = i < kudos ? 'bg-[#8b0000]' : 'bg-[#1e1e1e]';
         html += `<div class="w-4 h-0.5 rounded-full transition-all duration-300 ${filled}"></div>`;
     }
     return html;
@@ -81,7 +81,7 @@ function updateSoulCount(count) {
     if (el) el.textContent = count;
 }
 
-window.sendKudo = function (postId) {
+window.sendKudo = function (postId, event) {
     addRipple(event);
     fetch(`/posts/${postId}/kudo`, {
         method: 'POST',
