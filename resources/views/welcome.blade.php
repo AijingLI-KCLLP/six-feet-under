@@ -7,34 +7,100 @@
     <title>Six Feet Under</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Inter:wght@300;400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Inter:wght@300;400&display=swap');
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-8px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes vanish {
-            0%   { opacity: 1; max-height: 300px; }
-            60%  { opacity: 0; }
-            100% { opacity: 0; max-height: 0; padding: 0; }
-        }
-        @keyframes breathe {
-            0%, 100% { opacity: 0.2; }
-            50%       { opacity: 1; }
-        }
+    /* --- Base --- */
+    body { font-family: 'Inter', sans-serif; font-weight: 300; }
+    .font-serif-elegant { font-family: 'Cormorant Garamond', serif; }
 
-        body { font-family: 'Inter', sans-serif; font-weight: 300; }
-        .font-serif-elegant { font-family: 'Cormorant Garamond', serif; }
-        .post-card { animation: slideIn 0.4s ease; }
-        .vanishing { animation: vanish 0.6s ease forwards; overflow: hidden; }
-        .soul-dot  { animation: breathe 2s ease-in-out infinite; }
-    </style>
+    /* --- 1. Glitch sur le titre --- */
+    @keyframes glitch {
+        0%, 90%, 100% { transform: translate(0); clip-path: none; }
+        91%  { transform: translate(-2px, 1px); clip-path: inset(20% 0 60% 0); }
+        92%  { transform: translate(2px, -1px); clip-path: inset(60% 0 10% 0); }
+        93%  { transform: translate(-1px, 2px); clip-path: inset(40% 0 30% 0); }
+        94%  { transform: translate(0); clip-path: none; }
+    }
+    .glitch {
+        position: relative;
+        animation: glitch 5s infinite;
+    }
+    .glitch::before,
+    .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        inset: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: inherit;
+        font-weight: 300;
+    }
+    .glitch::before {
+        color: #ff3c3c22;
+        animation: glitch 5s infinite 0.05s;
+        clip-path: inset(30% 0 50% 0);
+    }
+    .glitch::after {
+        color: #3c8fff22;
+        animation: glitch 5s infinite 0.1s;
+        clip-path: inset(60% 0 20% 0);
+    }
+
+    .kudo-btn { position: relative; overflow: hidden; }
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.15);
+        transform: scale(0);
+        animation: rippleAnim 0.5s ease-out forwards;
+        pointer-events: none;
+    }
+    @keyframes rippleAnim {
+        to { transform: scale(4); opacity: 0; }
+    }
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(-10px); filter: blur(4px); }
+        to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+    }
+    .post-card { animation: slideIn 0.5s ease forwards; }
+
+    @keyframes flipUp {
+        0%   { opacity: 1; transform: translateY(0); }
+        40%  { opacity: 0; transform: translateY(-6px); }
+        60%  { opacity: 0; transform: translateY(6px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    .kudo-flip {
+        display: inline-block;
+        animation: flipUp 0.3s ease forwards;
+    }
+
+    /* --- Vanish --- */
+    @keyframes vanish {
+        0%   { opacity: 1; max-height: 300px; filter: blur(0); }
+        60%  { opacity: 0; filter: blur(6px); }
+        100% { opacity: 0; max-height: 0; padding: 0; }
+    }
+    .vanishing {
+        animation: vanish 0.7s ease forwards;
+        overflow: hidden;
+    }
+
+    @keyframes breathe {
+        0%, 100% { opacity: 0.2; transform: scale(1); }
+        50%       { opacity: 1;   transform: scale(1.4); }
+    }
+    .soul-dot { animation: breathe 2s ease-in-out infinite; }
+</style>
+
 </head>
 <body class="bg-[#080808] text-[#e8e8e3] min-h-screen">
 
     {{-- Header --}}
     <header class="border-b border-[#1a1a1a] px-10 py-6 flex items-center justify-between">
-        <span class="font-serif-elegant italic text-2xl tracking-wide font-light">Six Feet Under</span>
+        <span class="glitch font-serif-elegant italic text-2xl tracking-wide font-light" data-text="Six Feet Under">
+            Six Feet Under
+        </span>
         <span class="flex items-center gap-2 text-[#444] uppercase tracking-[0.2em] text-[0.65rem]">
             <span class="soul-dot w-1.5 h-1.5 rounded-full bg-[#444]"></span>
             <span id="soul-count" class="text-[#e8e8e3]">0</span> presence(s) in the void
@@ -80,7 +146,7 @@
                     <p class="text-[#c8c8c3] font-light text-base leading-relaxed">{{ $post->body }}</p>
                     <div class="flex items-center justify-between">
                         <button
-                            onclick="sendKudo({{ $post->id }})"
+                            onclick="sendKudo({{ $post->id }}, event)"
                             class="flex items-center gap-2 border border-[#1e1e1e] text-[#444] text-[0.7rem] tracking-wide px-3 py-1.5 rounded-sm hover:border-[#444] hover:text-[#e8e8e3] transition-all"
                         >
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
