@@ -19,10 +19,26 @@
             display: flex; flex-direction: column; align-items: center; gap: 1rem;
         }
         h1 { font-weight: 600; letter-spacing: .15em; opacity: .85; }
-        .post {
+        main {
             width: min(640px, 100%);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .post {
             background: #14141c; border: 1px solid #23232e; border-radius: 12px;
             padding: 1rem 1.2rem; line-height: 1.5;
+        }
+        .thoughts-form { display: flex; flex-direction: column; gap: .5rem; }
+        .thoughts-form textarea {
+            width: 100%;
+            background: #14141c; color: #e7e7ea;
+            border: 1px solid #23232e; border-radius: 12px;
+            padding: 1rem; font: inherit; resize: none;
+        }
+        .thoughts-form button {
+            align-self: flex-start;
+            background: #b3143a; color: #fff;
+            border: 0; border-radius: 10px;
+            padding: .6rem 1.2rem; font: inherit; cursor: pointer;
         }
     </style>
 </head>
@@ -30,21 +46,17 @@
     <h1>Six Feet Under</h1>
     <p>The thoughts you'd never say out loud.</p>
 
-    @foreach($posts as $post)
-        <div class = "post"> {{ $post->body }} - ❤ {{$post->kudos}}️ </div>
-    @endforeach
+    <main>
+        @foreach ($posts as $post)
+            @include('partials.post', ['post' => $post])
+        @endforeach
 
-    <form method="POST" action="/posts" style="width: min(640px, 100%);">
-        @csrf
-        <textarea name="body" maxlength="280" rows="3"
-                  placeholder="Say the unsayable…"
-                  style="width:100%; background:#14141c; color:#e7e7ea; border:1px solid #23232e; border-radius:12px; padding:1rem; font:inherit; resize:none;"></textarea>
-        <button type="submit"
-                style="margin-top:.5rem; background:#b3143a; color:#fff; border:0; border-radius:10px; padding:.6rem 1.2rem; font:inherit; cursor:pointer;">
-            Send
-        </button>
-    </form>
-
-
+        <form method="POST" action="/posts" class="thoughts-form">
+            @csrf
+            <textarea name="body" maxlength="280" rows="3"
+                      placeholder="Say the unsayable… careful what you wish for"></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </main>
 </body>
 </html>
