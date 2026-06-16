@@ -1,7 +1,6 @@
 <?php
 
+use App\Http\Controllers\WallController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WallController::class, 'index']);
