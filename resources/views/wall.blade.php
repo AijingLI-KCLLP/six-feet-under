@@ -26,7 +26,25 @@
         .post {
             background: #14141c; border: 1px solid #23232e; border-radius: 12px;
             padding: 1rem 1.2rem; line-height: 1.5;
+            display: flex; flex-direction: column; gap: .8rem;
         }
+        .post-body { margin: 0; }
+        .kudo-form { align-self: flex-end; margin: 0; }
+        .kudo-btn {
+            display: inline-flex; align-items: center; gap: .4rem;
+            background: transparent;
+            border: 1px solid #b3143a;
+            color: #b3143a;
+            border-radius: 999px;
+            padding: .35rem .85rem;
+            font: inherit; font-size: .9em;
+            cursor: pointer;
+            transition: background .15s, color .15s, transform .1s;
+        }
+        .kudo-btn:hover { background: #b3143a; color: #fff; }
+        .kudo-btn:active { transform: scale(.96); }
+        .kudo-heart { font-size: 1.1em; line-height: 1; }
+        .kudo-goal { opacity: .55; font-size: .85em; }
         .thoughts-form { display: flex; flex-direction: column; gap: .5rem; }
         .thoughts-form textarea {
             width: 100%;

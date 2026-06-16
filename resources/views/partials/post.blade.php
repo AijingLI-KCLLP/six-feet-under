@@ -1,3 +1,11 @@
 <article class="post">
-    {{ $post->body }} — ❤ {{ $post->kudos }}
+    <p class="post-body">{{ $post->body }}</p>
+    <form method="POST" action="/posts/{{ $post->id }}/kudo" class="kudo-form">
+        @csrf
+        <button type="submit" class="kudo-btn" aria-label="Give a kudo">
+            <span class="kudo-heart">♥</span>
+            <span class="kudo-count">{{ $post->kudos }}</span>
+            <span class="kudo-goal">/ 6</span>
+        </button>
+    </form>
 </article>

@@ -14,7 +14,7 @@ class WallController extends Controller
             "Je vole croquette de mon chien",
         ];*/
 
-        $posts = Post::latest()->get(['body', 'kudos']);
+        $posts = Post::latest()->get();
 
         return view('wall', compact('posts'));
     }
@@ -25,6 +25,23 @@ class WallController extends Controller
         ]);
 
         Post::create($validated);
+        return redirect('/');
+    }
+
+
+
+    public function kudo(Post $post){
+        $kudoed = session()->get('kudoed',[]);
+        if (in_array($post->id, $kudoed)){ return redirect('/'); }
+
+        session()->push('kudoed', $post->id);
+
+        $post->increment('kudos');
+
+        if ($post->kudos >= config('wall.kudos_to_vanish', 6)) {
+            $post->delete();
+        }
+
         return redirect('/');
     }
 }
