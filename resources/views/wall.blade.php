@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Six Feet Under</title>
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/favicon/apple-touch-icon.png') }}">
@@ -10,6 +11,7 @@
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon/favicon.ico') }}">
     <link rel="manifest" href="{{ asset('assets/img/favicon/site.webmanifest') }}">
     <meta name="theme-color" content="#ffffff">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         * { box-sizing: border-box; }
         body {
@@ -18,7 +20,14 @@
             font-family: ui-monospace, "SF Mono", Menlo, monospace;
             display: flex; flex-direction: column; align-items: center; gap: 1rem;
         }
-        h1 { font-weight: 600; letter-spacing: .15em; opacity: .85; }
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: #b3143a;
+        }
         main {
             width: min(640px, 100%);
             display: flex; flex-direction: column; gap: 1rem;
@@ -64,7 +73,7 @@
     <h1>Six Feet Under</h1>
     <p>The thoughts you'd never say out loud.</p>
 
-    <main>
+    <main id="wall">
         @foreach ($posts as $post)
             @include('partials.post', ['post' => $post])
         @endforeach

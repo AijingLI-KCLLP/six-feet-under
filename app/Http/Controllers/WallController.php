@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreated;
+use App\Events\PostKudoed;
+use App\Events\PostVanished;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
 class WallController extends Controller
 {
     public function index(){
-/*        $thoughts = [
-            "OIIAI",
-            "never six without seven",
-            "Je vole croquette de mon chien",
-        ];*/
-
         $posts = Post::latest()->get();
 
         return view('wall', compact('posts'));
@@ -24,11 +21,11 @@ class WallController extends Controller
             'body' => 'required|string|max:255',
         ]);
 
-        Post::create($validated);
+        $post = Post::create($validated);
+        PostCreated::dispatch($post);
+
         return redirect('/');
     }
-
-
 
     public function kudo(Post $post){
         $kudoed = session()->get('kudoed',[]);
@@ -37,9 +34,11 @@ class WallController extends Controller
         session()->push('kudoed', $post->id);
 
         $post->increment('kudos');
+        PostKudoed::dispatch($post);
 
         if ($post->kudos >= config('wall.kudos_to_vanish', 6)) {
             $post->delete();
+            PostVanished::dispatch($post);
         }
 
         return redirect('/');
