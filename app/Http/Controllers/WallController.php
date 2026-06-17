@@ -27,9 +27,11 @@ class WallController extends Controller
         return redirect('/');
     }
 
-    public function kudo(Post $post){
+    public function kudo(Request $request, Post $post){
         $kudoed = session()->get('kudoed',[]);
-        if (in_array($post->id, $kudoed)){ return redirect('/'); }
+        if (in_array($post->id, $kudoed)){
+            return $request->wantsJson() ? response()->json(['already' => true]) : redirect('/');
+        }
 
         session()->push('kudoed', $post->id);
 
@@ -41,6 +43,6 @@ class WallController extends Controller
             PostVanished::dispatch($post);
         }
 
-        return redirect('/');
+        return $request->wantsJson() ? response()->noContent() : redirect('/');
     }
 }
