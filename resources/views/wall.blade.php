@@ -28,6 +28,11 @@
             text-transform: uppercase;
             color: #b3143a;
         }
+        .kudo-hint {
+            margin: 0;
+            font-size: .8em;
+            color: #d6647e;
+        }
         main {
             width: min(640px, 100%);
             display: flex; flex-direction: column; gap: 1rem;
@@ -68,10 +73,13 @@
             padding: .6rem 1.2rem; font: inherit; cursor: pointer;
         }
     </style>
+    @stack('styles')
 </head>
 <body>
     <h1>Six Feet Under</h1>
     <p>The thoughts you'd never say out loud.</p>
+    <p class="kudo-hint">6 kudos will let it go.</p>
+
 
     <main id="wall">
         @foreach ($posts as $post)
