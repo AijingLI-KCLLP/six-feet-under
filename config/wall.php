@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'kudos_to_vanish' => 2 ,
+    'kudos_to_vanish' => 3 ,
 ];
